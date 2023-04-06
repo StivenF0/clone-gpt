@@ -39,8 +39,6 @@ const PasswordInput = () => {
 }
 
 export default function SignInPage() {
-  const fieldClassName = "flex items-center border-b border-gray-100 w-[80%]";
-
   return <>
     <Head>
       <title>Sign In</title>

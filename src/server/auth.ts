@@ -52,7 +52,18 @@ export const authOptions: NextAuthOptions = {
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
     }),
-    
+    CredentialsProvider({
+      type: "credentials",
+      credentials: {},
+      authorize(credentials, req) {
+        const { email, password } = credentials as {
+          email: string;
+          password: string;
+        }
+
+        return null
+      },
+    }),
   ],
 };
 
