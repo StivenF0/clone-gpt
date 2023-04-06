@@ -3,10 +3,10 @@ import { HiOutlineMail } from 'react-icons/hi';
 import { AiOutlineUser } from 'react-icons/ai';
 import { BiKey } from 'react-icons/bi';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
-import { useState } from "react";
+import { MutableRefObject, useRef, useState } from "react";
 import Link from "next/link";
 
-const PasswordInput = () => {
+const PasswordInput = (passwordInputRef: MutableRefObject<null>) => {
   const eyeClassName = "absolute fill-slate-300 right-0 top-1/2 -translate-y-1/2";
   const [showPassword, setShow] = useState(false);
 
@@ -22,6 +22,8 @@ const PasswordInput = () => {
       />
       <div className="px-[0.13rem]" />
       <input
+        ref={passwordInputRef}
+        name="password"
         type={showPassword ? "text" : "password"}
         placeholder="Password"
         className="bg-transparent focus:outline-none text-gray-100 placeholder:text-gray-600 w-[calc(90%-1rem)]"
@@ -39,8 +41,18 @@ const PasswordInput = () => {
   )
 }
 
-export default function SignInPage() {
-  const fieldClassName = "flex items-center border-b border-gray-100 w-[80%]";
+export default function SignUpPage() {
+  const nameInputRef = useRef(null)
+  const emailInputRef = useRef(null)
+  const passwordInputRef = useRef(null)
+  const handleSubmit = (event: React.SyntheticEvent) => {
+    event.preventDefault()
+    console.log([
+      (nameInputRef.current! as HTMLInputElement).value,
+      (emailInputRef.current! as HTMLInputElement).value,
+      (passwordInputRef.current! as HTMLInputElement).value,
+    ])
+  }
 
   return <>
     <Head>
@@ -51,6 +63,7 @@ export default function SignInPage() {
     >
       <form 
         className="flex flex-col min-w-[20rem] w-[20vw] max-w-[30rem] aspect-[2/3] bg-gray-900 rounded-xl p-6"
+        onSubmit={handleSubmit}
       >
         <h1 className="text-gray-100 font-bold text-4xl">Sign Up</h1>
         <div className="flex flex-col flex-grow items-center justify-center">
@@ -60,6 +73,8 @@ export default function SignInPage() {
             />
             <div className="px-[0.2rem]" />
             <input
+              ref={nameInputRef}
+              name="name"
               type="text"
               placeholder="Name"
               className="flex-grow bg-transparent focus:outline-none text-gray-100 placeholder:text-gray-600"
@@ -72,6 +87,8 @@ export default function SignInPage() {
             />
             <div className="px-[0.2rem]" />
             <input
+              ref={emailInputRef}
+              name="email"
               type="email"
               placeholder="Email"
               className="flex-grow bg-transparent focus:outline-none text-gray-100 placeholder:text-gray-600"
@@ -79,7 +96,7 @@ export default function SignInPage() {
           </div>
           <div className="p-3"/>
           {
-            PasswordInput()
+            PasswordInput(passwordInputRef)
           }
           <div className="p-3"/>
           <div className="w-[85%]">
