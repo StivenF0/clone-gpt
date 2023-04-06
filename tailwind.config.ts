@@ -6,6 +6,7 @@ export default {
     extend: {
       colors: {
         "dark": "#343541",
+        "aigreen": "#75a99c",
       }
     },
   },
