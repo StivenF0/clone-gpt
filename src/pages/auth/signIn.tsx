@@ -5,6 +5,8 @@ import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { type MutableRefObject, useRef, useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
+import { type GetServerSideProps } from "next";
+import { getServerAuthSession } from "@/server/auth";
 
 
 export default function SignInPage() {
@@ -19,7 +21,6 @@ export default function SignInPage() {
     }
     const res = await signIn("credentials", {
       ...body,
-      redirect: false,
       callbackUrl: "/",
     })
     console.log(res)
@@ -105,4 +106,23 @@ function PasswordInput (passwordRef: MutableRefObject<null>) {
       </div>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getServerAuthSession(context)
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      }
+    }
+  }
+
+  return {
+    props: {
+      session
+    }
+  }
 }

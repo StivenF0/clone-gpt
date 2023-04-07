@@ -7,6 +7,9 @@ export default {
       colors: {
         "dark": "#343541",
         "aigreen": "#75a99c",
+        "gray": {
+          "900": "#202123",
+        }
       }
     },
   },
