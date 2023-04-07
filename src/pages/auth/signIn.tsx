@@ -33,7 +33,7 @@ export default function SignInPage() {
       <link rel="icon" href="/favicon.png" />
     </Head>
     <main
-      className="w-full min-h-screen grid place-items-center bg-dark"
+      className="w-full min-h-screen grid place-items-center bg-gray-800"
     >
       <form 
         onSubmit={handleSubmit}

@@ -39,7 +39,7 @@ export default function SignUpPage() {
       <link rel="icon" href="/favicon.png" />
     </Head>
     <main
-      className="w-full min-h-screen grid place-items-center bg-dark"
+      className="w-full min-h-screen grid place-items-center bg-gray-800"
     >
       <form 
         className="flex flex-col min-w-[20rem] w-[20vw] max-w-[30rem] aspect-[2/3] bg-gray-900 rounded-xl p-6"
