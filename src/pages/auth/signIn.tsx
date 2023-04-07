@@ -6,39 +6,6 @@ import { type MutableRefObject, useRef, useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 
-const PasswordInput = (passwordRef: MutableRefObject<null>) => {
-  const eyeClassName = "absolute fill-slate-300 right-0 top-1/2 -translate-y-1/2";
-  const [showPassword, setShow] = useState(false);
-
-  const handleToggle = (e: React.MouseEvent) => {
-    e.preventDefault()
-    setShow(!showPassword)
-  }
-
-  return (
-    <div className="flex items-center border-b border-gray-100 w-[85%] relative">
-      <BiKey 
-        className="fill-slate-300 text-2xl"
-      />
-      <div className="px-[0.13rem]" />
-      <input
-        ref={passwordRef}
-        type={showPassword ? "text" : "password"}
-        placeholder="Password"
-        className="bg-transparent focus:outline-none text-gray-100 placeholder:text-gray-600 w-[calc(90%-1rem)]"
-      />
-      <div className="px-[0.65rem] cursor-pointer" onClick={handleToggle}>
-        {
-          !showPassword
-          ?
-          <BsFillEyeFill className={eyeClassName} />
-          :
-          <BsFillEyeSlashFill className={eyeClassName} />
-        }
-      </div>
-    </div>
-  )
-}
 
 export default function SignInPage() {
   const emailRef = useRef(null)
@@ -62,6 +29,7 @@ export default function SignInPage() {
   return <>
     <Head>
       <title>Sign In</title>
+      <link rel="icon" href="/favicon.png" />
     </Head>
     <main
       className="w-full min-h-screen grid place-items-center bg-dark"
@@ -102,4 +70,39 @@ export default function SignInPage() {
       </form>
     </main>
   </>
+}
+
+
+function PasswordInput (passwordRef: MutableRefObject<null>) {
+  const eyeClassName = "absolute fill-slate-300 right-0 top-1/2 -translate-y-1/2";
+  const [showPassword, setShow] = useState(false);
+
+  const handleToggle = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setShow(!showPassword)
+  }
+
+  return (
+    <div className="flex items-center border-b border-gray-100 w-[85%] relative">
+      <BiKey 
+        className="fill-slate-300 text-2xl"
+      />
+      <div className="px-[0.13rem]" />
+      <input
+        ref={passwordRef}
+        type={showPassword ? "text" : "password"}
+        placeholder="Password"
+        className="bg-transparent focus:outline-none text-gray-100 placeholder:text-gray-600 w-[calc(90%-1rem)]"
+      />
+      <div className="px-[0.65rem] cursor-pointer" onClick={handleToggle}>
+        {
+          !showPassword
+          ?
+          <BsFillEyeFill className={eyeClassName} />
+          :
+          <BsFillEyeSlashFill className={eyeClassName} />
+        }
+      </div>
+    </div>
+  )
 }
