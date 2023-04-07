@@ -88,7 +88,7 @@ export default function SignUpPage() {
           </div>
         </div>
         <div className="p-2" />
-        <div className="text-gray-100">Alredy registered? <Link className="text-aigreen font-semibold" href="/auth/signin">Sign In</Link></div>
+        <div className="text-gray-100">Alredy registered? <Link className="text-green-400 font-semibold" href="/auth/signin">Sign In</Link></div>
       </form>
     </main>
   </>

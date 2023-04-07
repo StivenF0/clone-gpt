@@ -5,9 +5,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        "dark": "#343541",
-        "aigreen": "#75a99c",
+        "green": {
+          "400": "#75a99c"
+        },
         "gray": {
+          "800": "#343541",
           "900": "#202123",
         }
       }
