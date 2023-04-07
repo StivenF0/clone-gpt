@@ -4,11 +4,12 @@ import {
   type NextAuthOptions,
   type DefaultSession,
 } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
 import CredentialsProvider from "next-auth/providers/credentials";
+import sha256 from "crypto-js/sha256";
+
+
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -37,34 +38,52 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
-  callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
-        // session.user.role = user.role; <-- put other properties on the session here
-      }
-      return session;
-    },
+  // callbacks: {
+  //   session({ session, user }) {
+  //     if (session.user) {
+  //       session.user.id = user.id;
+  //       // session.user.role = user.role; <-- put other properties on the session here
+  //     }
+  //     return session;
+  //   },
+  // },
+  session: {
+    strategy: "jwt",
   },
   adapter: PrismaAdapter(prisma),
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
-    }),
     CredentialsProvider({
       type: "credentials",
       credentials: {},
-      authorize(credentials, req) {
-        const { email, password } = credentials as {
-          email: string;
-          password: string;
+      async authorize(credentials, req) {
+        const input = credentials as {
+          email: string
+          password: string
         }
 
+        const user = await prisma.user.findUnique({
+          where: { email: input.email },
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            image: true,
+            password: true,
+          }
+        })
+
+        if (user && user.password === sha256(input.password).toString()) {
+          const { password: _ , ...activeUser} = user
+          return activeUser
+        }
         return null
       },
+      
     }),
   ],
+  pages: {
+    signIn: '/auth/signin',
+  }
 };
 
 /**

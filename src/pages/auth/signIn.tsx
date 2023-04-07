@@ -2,10 +2,11 @@ import Head from "next/head";
 import { HiOutlineMail } from 'react-icons/hi';
 import { BiKey } from 'react-icons/bi';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
-import { useState } from "react";
+import { type MutableRefObject, useRef, useState } from "react";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
-const PasswordInput = () => {
+const PasswordInput = (passwordRef: MutableRefObject<null>) => {
   const eyeClassName = "absolute fill-slate-300 right-0 top-1/2 -translate-y-1/2";
   const [showPassword, setShow] = useState(false);
 
@@ -21,11 +22,12 @@ const PasswordInput = () => {
       />
       <div className="px-[0.13rem]" />
       <input
+        ref={passwordRef}
         type={showPassword ? "text" : "password"}
         placeholder="Password"
         className="bg-transparent focus:outline-none text-gray-100 placeholder:text-gray-600 w-[calc(90%-1rem)]"
       />
-      <button className="px-[0.65rem]" onClick={handleToggle}>
+      <div className="px-[0.65rem] cursor-pointer" onClick={handleToggle}>
         {
           !showPassword
           ?
@@ -33,12 +35,30 @@ const PasswordInput = () => {
           :
           <BsFillEyeSlashFill className={eyeClassName} />
         }
-      </button>
+      </div>
     </div>
   )
 }
 
 export default function SignInPage() {
+  const emailRef = useRef(null)
+  const passwordRef = useRef(null)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const body = {
+      email: (emailRef.current! as HTMLInputElement).value,
+      password: (passwordRef.current! as HTMLInputElement).value,
+    }
+    const res = await signIn("credentials", {
+      ...body,
+      redirect: false,
+      callbackUrl: "/",
+    })
+    console.log(res)
+  }
+
+
   return <>
     <Head>
       <title>Sign In</title>
@@ -47,6 +67,7 @@ export default function SignInPage() {
       className="w-full min-h-screen grid place-items-center bg-dark"
     >
       <form 
+        onSubmit={handleSubmit}
         className="flex flex-col min-w-[20rem] w-[20vw] max-w-[30rem] aspect-[2/3] bg-gray-900 rounded-xl p-6"
       >
         <h1 className="text-gray-100 font-bold text-4xl">Sign In</h1>
@@ -57,6 +78,7 @@ export default function SignInPage() {
             />
             <div className="px-[0.2rem]" />
             <input
+              ref={emailRef}
               type="email"
               placeholder="Email"
               className="flex-grow bg-transparent focus:outline-none text-gray-100 placeholder:text-gray-600"
@@ -64,7 +86,7 @@ export default function SignInPage() {
           </div>
           <div className="p-3"/>
           {
-            PasswordInput()
+            PasswordInput(passwordRef)
           }
           <div className="p-3"/>
           <div className="w-[85%]">

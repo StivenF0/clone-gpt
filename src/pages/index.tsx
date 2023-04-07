@@ -1,9 +1,10 @@
 import { GetServerSideProps, type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { getSession, signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "@/utils/api";
+import { getServerAuthSession } from "@/server/auth";
 
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
@@ -83,13 +84,13 @@ const AuthShowcase: React.FC = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context)
+  const session = await getServerAuthSession(context)
 
   if (!session) {
     return {
       redirect: {
         destination: "/auth/signin",
-        permanent: false
+        permanent: false,
       }
     }
   }

@@ -6,6 +6,8 @@ import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import { MutableRefObject, useRef, useState } from "react";
 import Link from "next/link";
 
+import { api } from "@/utils/api";
+
 const PasswordInput = (passwordInputRef: MutableRefObject<null>) => {
   const eyeClassName = "absolute fill-slate-300 right-0 top-1/2 -translate-y-1/2";
   const [showPassword, setShow] = useState(false);
@@ -45,13 +47,19 @@ export default function SignUpPage() {
   const nameInputRef = useRef(null)
   const emailInputRef = useRef(null)
   const passwordInputRef = useRef(null)
-  const handleSubmit = (event: React.SyntheticEvent) => {
+
+  const createUser = api.auth.createUser.useMutation()
+  const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault()
-    console.log([
-      (nameInputRef.current! as HTMLInputElement).value,
-      (emailInputRef.current! as HTMLInputElement).value,
-      (passwordInputRef.current! as HTMLInputElement).value,
-    ])
+
+    const body = {
+      name: (nameInputRef.current! as HTMLInputElement).value,
+      email: (emailInputRef.current! as HTMLInputElement).value,
+      password: (passwordInputRef.current! as HTMLInputElement).value,
+    }
+
+    const user = await createUser.mutate(body);
+    console.log(user)
   }
 
   return <>
