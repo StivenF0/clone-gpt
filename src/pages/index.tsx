@@ -1,7 +1,6 @@
 import { GetServerSideProps, type NextPage } from "next";
 import { getServerAuthSession } from "@/server/auth";
 import Head from "next/head";
-import { Main } from "next/document";
 
 const Home: NextPage = () => {
   return <>
