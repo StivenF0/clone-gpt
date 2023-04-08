@@ -4,20 +4,31 @@ import { useContext } from "react";
 
 
 export default function SideBar() {
+  const {isShowing, setShowing} = useContext(Context)
+
   return (
-    <div className="bg-gray-900 md:flex md:w-[260px] md:flex-col h-full p-2 space-y-1">
-      <NewChatButton />
+    <>
+      <div className={`bg-gray-900 flex w-[260px] flex-col h-full p-2 space-y-1 max-md:absolute max-md:top-0 max-md:z-30 max-md:w-80 max-md:transition-all max-md:duration-300 max-md:ease-in-out ${ isShowing ? "max-md:left-0" : "max-md:-left-full" }`}>
+        <CloseSidebarButton setShowing={setShowing}/>
+        <NewChatButton />
 
-      {/* Threads container*/}
-      <div className="flex flex-col flex-1 overflow-y-auto border-b border-white/20 gap-2 text-gray-100 text-sm">
-        {/* Threads Links*/}
-        <ActiveThreadLink title="Qualquer" />
-
+        {/* Threads container*/}
+        <div className="flex flex-col flex-1 overflow-y-auto border-b border-white/20 gap-2 text-gray-100 text-sm">
+          {/* Threads Links*/}
+          <ThreadLink title="Testando"/>
+          
+        </div>
         
+        <SideOptions clearButton={false} />
       </div>
-      
-      <SideOptions clearButton={false} />
-    </div>
+        <div className={`md:hidden absolute top-0 left-0 w-full h-screen bg-[rgba(86,88,105,0.75)] transition-all z-20 ${isShowing ? "opacity-100" : "opacity-0 pointer-events-none" }`}></div>
+    </>
+  )
+}
+
+const CloseSidebarButton = ({ setShowing }: { setShowing: React.Dispatch<React.SetStateAction<boolean>> }) => {
+  return (
+    <button onClick={() => {setShowing(false)}} type="button" className="absolute top-2 -right-12 hidden max-md:flex h-10 w-10 items-center justify-center focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" tabIndex={0}><span className="sr-only">Close sidebar</span><svg stroke="currentColor" fill="none" strokeWidth="1.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-white" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
   )
 }
 
