@@ -1,24 +1,20 @@
 import { useState } from "react"
-import Image from 'next/image'
 import ChatGPTIcon from "./ChatGPTIcon"
 import StartingChat from "./StartingChat"
+import ChatForm from "./ChatForm"
 
 export default function MainSection() {
   const [startingThread, setStarting] = useState(true)
 
   return (
-    <div className="relative flex h-full flex-col flex-grow overflow-x-hidden overflow-y-auto text-gray-100">
+    <div className="relative flex h-full flex-col flex-grow overflow-x-hidden overflow-y-auto text-gray-100 dark">
       <StartingChat startingThread={startingThread} />
       <ChatForm />
     </div>
   )
 }
 
-const ChatForm = () => {
-  return (
-    <div className="absolute "></div>
-  )
-}
+
 
 const MessageBox = ({ background = false, title, content }: { background: boolean, title: string, content: string }) => {
   return (
