@@ -2,6 +2,7 @@ import { GetServerSideProps, type NextPage } from "next";
 import { getServerAuthSession } from "@/server/auth";
 import Head from "next/head";
 import SideBar from "@/components/Sidebar";
+import MainSection from "@/components/MainSection";
 
 const Home: NextPage = () => {
   return <>
@@ -14,6 +15,9 @@ const Home: NextPage = () => {
 
       {/* Sidebar Layout */}
       <SideBar />
+
+      {/* Main Section */}
+      <MainSection />
 
     </main>
   </>
