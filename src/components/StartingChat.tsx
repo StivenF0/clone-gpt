@@ -7,7 +7,7 @@ const StartingChat = ({ startingThread }: {startingThread: boolean}) => {
       <>
         <h1 className="text-4xl font-semibold text-center mt-4 ml-auto mr-auto mb-10 sm:mb-16 flex gap-2 items-center justify-center">CloneGPT</h1>
 
-        <div className="group w-full text-gray-100 border-b border-gray-900/50 bg-[#444654]">
+        <div className="group w-full text-gray-800 dark:text-gray-100 border-b border-black/10 dark:border-gray-900/50 bg-gray-50 dark:bg-[#444654]">
           <div className="text-base gap-4 md:gap-6 md:max-w-2xl lg:max-w-xl xl:max-w-3xl p-4 md:py-6 flex lg:px-0 m-auto">
 
             {/* Profile Image */}
