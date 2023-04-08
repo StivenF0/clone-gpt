@@ -3,7 +3,7 @@ import Image from 'next/image'
 import ChatGPTIcon from "./ChatGPTIcon"
 
 export default function MainSection() {
-  const [startingThread, setStarting] = useState(false)
+  const [startingThread, setStarting] = useState(true)
 
   return (
     <div className="flex h-full flex-col flex-grow overflow-x-hidden overflow-y-auto text-gray-100">
