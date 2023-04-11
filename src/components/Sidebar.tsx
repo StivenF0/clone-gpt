@@ -15,7 +15,6 @@ export default function SideBar() {
         {/* Threads container*/}
         <div className="flex flex-col flex-1 overflow-y-auto border-b border-white/20 gap-2 text-gray-100 text-sm">
           {/* Threads Links*/}
-          <ThreadLink title="Testando"/>
           
         </div>
         

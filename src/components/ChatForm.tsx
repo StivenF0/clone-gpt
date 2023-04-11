@@ -6,6 +6,7 @@ const ChatForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    if (textValue.replace(/[\s\n]/g, "") === "") return
     setTextValue("")
   }
 
