@@ -5,8 +5,8 @@ import SideBar from "@/components/Sidebar";
 import MainSection from "@/components/MainSection";
 import { createContext, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { api } from "@/utils/api";
-import useThreads, { Thread } from "@/hooks/useThreads";
+import useThreads, { type Thread } from "@/hooks/useThreads";
+import { Session } from "@prisma/client";
 
 export const Context = createContext({} as {
   isDarkMode: boolean
@@ -15,16 +15,20 @@ export const Context = createContext({} as {
   setShowing: React.Dispatch<React.SetStateAction<boolean>>
   startingThread: boolean
   setStarting: React.Dispatch<React.SetStateAction<boolean>>
-  threads: Promise<Thread[]>
+  threads: Thread[]
 })
 
-const Home: NextPage = () => {
-  const { data: session } = useSession()
+const Home: NextPage = (props) => {
+  const { data: session, status } = useSession({required: true})
+  if (status === "loading") {
+    return <div className="">Loading</div>
+  }
+
   const [isDarkMode, setDarkMode] = useState(true)
   const [isShowing, setShowing] = useState(false) // Showing the sidebar
   const [startingThread, setStarting] = useState(true) // Starting new thread
-  const threads = useThreads(session!)
-  
+  const { threads } = useThreads(session.user.email!)
+  console.log(threads)
 
   useEffect(() => {
     const htmlElement = document.querySelector("html")!

@@ -1,6 +1,7 @@
 import { createTRPCRouter } from "@/server/api/trpc";
 import { authRouter } from "@/server/api/routers/auth";
 import { threadsRouter } from "./routers/threads";
+import { assistantRouter } from "./routers/openaiApi";
 
 
 /**
@@ -11,6 +12,7 @@ import { threadsRouter } from "./routers/threads";
 export const appRouter = createTRPCRouter({
   auth: authRouter,
   threads: threadsRouter,
+  assistant: assistantRouter,
 });
 
 // export type definition of API

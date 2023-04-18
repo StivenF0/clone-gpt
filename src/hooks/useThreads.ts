@@ -1,31 +1,57 @@
 import { api } from "@/utils/api"
-import { Session } from "next-auth"
 import { useEffect, useState } from "react"
+
+export interface Message {
+  role: string
+  content: string
+}
 
 export interface Thread {
   title: string
-  messages: {
-    role: string
-    content: string
-  }[]
+  messages: Message[]
 }
 
 
-const useThreads = async (session: Session) => {
-  const [threads, setThreads] = useState([] as Thread[])
-  const userId = session.user.id
-  const response = api.threads.getThreads.useQuery(userId)
+const useThreads = (userEmail: string) => {
+  const setThreadsData = api.threads.setThreads.useMutation()
+  const fetchThreads = api.threads.getThreads.useMutation()
+  const fetchedThreads = fetchThreads.mutate(userEmail)
+
+  // Get threads from the database
+  const [threads, setThreads] = useState(
+    Array.isArray(fetchedThreads) && fetchedThreads.length === 0 ?
+    [] :
+    fetchedThreads! as Thread[]
+  )
 
   useEffect(() => {
-    const fetchThreads = async () => {
-      const data = await response.query()
-      console.log(data)
-    }
-    fetchThreads()
-  }, [threads])
+    setThreadsData.mutate(threads)
+  }, [setThreads])
+
+  const addThread = (title: string, threadMessages: Message[]) => {
+    setThreads([
+      ...threads,
+      {
+        title: title,
+        messages: [
+          {
+            role: "system",
+            content: "You are a helpful assistant.",
+          },
+          {
+            role: "user",
+            content: ""
+          }
+        ]
+      }
+    ])
+  }
+
+
+
   
 
-  return threads
+  return { threads, addThread }
 }
 
 export default useThreads

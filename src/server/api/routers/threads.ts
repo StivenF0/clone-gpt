@@ -10,16 +10,30 @@ import {
 export const threadsRouter = createTRPCRouter({
   getThreads: publicProcedure
     .input(z.string())
-    .query(async ({ input }: { input: string }) => {
+    .mutation(async ({ input }: { input: string }) => {
       const userThreads = await prisma.user.findUnique({
-        where: {
-          id: input
-        },
+        where: { email: input },
         select: {
-          chatThread: true
-        }
+          chatThread: true,
+        },
       })
 
       return userThreads
+    }),
+  setThreads: publicProcedure
+    .input(z.array(
+      z.object({
+        title: z.string(),
+        messages: z.array(
+          z.object({
+            role: z.string(),
+            content: z.string(),
+          })
+        )
+      })
+    ))
+    .mutation(({ input }) => {
+
     })
+
 })
