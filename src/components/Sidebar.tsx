@@ -99,6 +99,10 @@ const SideOptions = ({ clearButton }: { clearButton: boolean }) => {
     return;
   };
 
+  const handleLogOut = () => {
+    signOut();
+  };
+
   return (
     <>
       {clearButton && (
@@ -211,15 +215,7 @@ const SideOptions = ({ clearButton }: { clearButton: boolean }) => {
         </svg>
         Get help
       </a>
-      <a
-        onClick={
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          async () => {
-            await signOut();
-          }
-        }
-        className={buttonClassName}
-      >
+      <a onClick={handleLogOut} className={buttonClassName}>
         <svg
           stroke="currentColor"
           fill="none"
