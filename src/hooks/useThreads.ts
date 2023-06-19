@@ -17,10 +17,10 @@ const useThreads = (userEmail: string) => {
   const fetchedThreads = fetchThreads.mutate(userEmail);
 
   // Get threads from the database
-  const [threads, setThreads] = useState(
+  const [threads, setThreads] = useState<Thread[]>(
     Array.isArray(fetchedThreads) && fetchedThreads.length === 0
       ? []
-      : (fetchedThreads! as Thread[])
+      : (fetchedThreads!)
   );
 
   // useEffect(() => {

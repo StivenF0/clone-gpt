@@ -94,8 +94,8 @@ const SideOptions = ({ clearButton }: { clearButton: boolean }) => {
 
   const { isDarkMode, setDarkMode } = useContext(Context);
 
-  const handleToggleDarkMode = () => {
-    setDarkMode(!isDarkMode);
+  const handleToggleDarkMode = async () => {
+    await setDarkMode(!isDarkMode);
   };
 
   return (
