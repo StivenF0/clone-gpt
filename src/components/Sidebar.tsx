@@ -212,9 +212,12 @@ const SideOptions = ({ clearButton }: { clearButton: boolean }) => {
         Get help
       </a>
       <a
-        onClick={async () => {
-          await signOut();
-        }}
+        onClick={
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          async () => {
+            await signOut();
+          }
+        }
         className={buttonClassName}
       >
         <svg
