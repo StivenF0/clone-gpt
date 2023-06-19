@@ -15,18 +15,13 @@ import {
 } from "@/server/api/trpc";
 
 export const assistantRouter = createTRPCRouter({
-  sendPrompt: publicProcedure
-    .input(z.string())
-    .mutation(async ({ input }) => {
-      const response = await openai.createCompletion({
-        model: "gpt-3.5-turbo",
-        temperature: 0.7,
-        prompt: input
-      })
+  sendPrompt: publicProcedure.input(z.string()).mutation(async ({ input }) => {
+    const response = await openai.createCompletion({
+      model: "gpt-3.5-turbo",
+      temperature: 0.7,
+      prompt: input,
+    });
 
-      
-      return response.data.choices[0]?.text
-      
-    })
-
-})
+    return response.data.choices[0]?.text;
+  }),
+});
