@@ -100,6 +100,7 @@ const SideOptions = ({ clearButton }: { clearButton: boolean }) => {
   };
 
   const handleLogOut = () => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     signOut();
   };
 
