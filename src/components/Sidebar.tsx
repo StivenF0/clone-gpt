@@ -94,8 +94,9 @@ const SideOptions = ({ clearButton }: { clearButton: boolean }) => {
 
   const { isDarkMode, setDarkMode } = useContext(Context);
 
-  const handleToggleDarkMode = async () => {
-    await setDarkMode(!isDarkMode);
+  const handleToggleDarkMode = () => {
+    setDarkMode(!isDarkMode);
+    return;
   };
 
   return (
@@ -211,8 +212,8 @@ const SideOptions = ({ clearButton }: { clearButton: boolean }) => {
         Get help
       </a>
       <a
-        onClick={() => {
-          signOut();
+        onClick={async () => {
+          await signOut();
         }}
         className={buttonClassName}
       >

@@ -14,13 +14,15 @@ export interface Thread {
 const useThreads = (userEmail: string) => {
   // const setThreadsData = api.threads.setThreads.useMutation();
   const fetchThreads = api.threads.getThreads.useMutation();
-  const fetchedThreads = fetchThreads.mutate(userEmail);
+  const fetchedThreads = fetchThreads.mutate(userEmail) as unknown as
+    | Thread[]
+    | [];
 
   // Get threads from the database
   const [threads, setThreads] = useState<Thread[]>(
     Array.isArray(fetchedThreads) && fetchedThreads.length === 0
       ? []
-      : (fetchedThreads!)
+      : fetchedThreads
   );
 
   // useEffect(() => {
