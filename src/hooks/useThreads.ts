@@ -1,5 +1,5 @@
 import { api } from "@/utils/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export interface Message {
   role: string;
@@ -12,7 +12,7 @@ export interface Thread {
 }
 
 const useThreads = (userEmail: string) => {
-  const setThreadsData = api.threads.setThreads.useMutation();
+  // const setThreadsData = api.threads.setThreads.useMutation();
   const fetchThreads = api.threads.getThreads.useMutation();
   const fetchedThreads = fetchThreads.mutate(userEmail);
 
@@ -23,9 +23,9 @@ const useThreads = (userEmail: string) => {
       : (fetchedThreads! as Thread[])
   );
 
-  useEffect(() => {
-    setThreadsData.mutate(threads);
-  }, [setThreads, threads]);
+  // useEffect(() => {
+  //   setThreadsData.mutate(threads);
+  // }, [setThreads, threads]);
 
   const addThread = (title: string) => {
     setThreads([

@@ -14,7 +14,7 @@ const ChatForm = ({ hooks: { messages, setMessages } }: ChatFormProps) => {
   const [areaHeight, setHeight] = useState(24);
   // const getPrompt = api.assistant.sendPrompt.useMutation();
 
-  const addMessage = async () => {
+  const addMessage = () => {
     // const response = (await getPrompt.mutate(textValue)) as unknown as string;
 
     setMessages([

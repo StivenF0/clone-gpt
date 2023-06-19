@@ -4,6 +4,7 @@ import StartingChat from "./StartingChat";
 import ChatForm from "./ChatForm";
 import { Context } from "@/pages";
 import { useSession } from "next-auth/react";
+import { randomUUID } from "crypto";
 
 export interface Message {
   role: "assistant" | "system" | "user";
@@ -28,6 +29,7 @@ export default function MainSection() {
       {messages.map((message) => {
         return (
           <MessageBox
+            key={randomUUID()}
             title={session!.user.name as string}
             background={message.role === "assistant"}
             content={message.content}
