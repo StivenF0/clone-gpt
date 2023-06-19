@@ -1,17 +1,44 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import ChatGPTIcon from "./ChatGPTIcon"
 import StartingChat from "./StartingChat"
 import ChatForm from "./ChatForm"
 import { Context } from "@/pages"
+import { useSession } from "next-auth/react"
+
+export interface Message {
+  role: "assistant" | "system" | "user"
+  content: string
+}
 
 export default function MainSection() {
+  const {data: session} = useSession()
+  const [messages, setMessages] = useState<Message[]>([])
   const {startingThread, setStarting} = useContext(Context)
+
+  if (messages.length > 0) {
+    setStarting(false)
+  }
 
   return (
     <div className="relative flex h-full flex-col flex-grow overflow-x-hidden overflow-y-auto text-gray-800 dark:text-gray-100">
       <TopbarMobile />
-      <StartingChat startingThread={startingThread} />
-      <ChatForm />
+      {
+        startingThread &&
+        <StartingChat />
+      }
+      <ChatForm hooks={{ messages, setMessages }} />
+      
+      {
+        messages.map((message) => {
+          return (
+            <MessageBox
+              title={session!.user.name as string}
+              background={message.role === "assistant"}
+              content={message.content}
+            />
+          )
+        })
+      }
     </div>
   )
 }
@@ -34,6 +61,8 @@ const TopbarMobile = () => {
 }
 
 const MessageBox = ({ background = false, title, content }: { background: boolean, title: string, content: string }) => {
+  console.log(content)
+
   return (
     <div className={`group w-full text-gray-800 dark:text-gray-100 border-b border-black/10 dark:border-gray-900/50 ${background ? "bg-gray-50 dark:bg-[#444654]" : "" }`}>
       <div className="text-base gap-4 md:gap-6 md:max-w-2xl lg:max-w-xl xl:max-w-3xl p-4 md:py-6 flex lg:px-0 m-auto">

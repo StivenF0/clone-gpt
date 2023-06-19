@@ -1,12 +1,39 @@
 import React, { useEffect, useState } from "react"
+import { type Message } from "./MainSection"
+import { api } from "@/utils/api"
 
-const ChatForm = () => {
+interface ChatFormProps {
+  hooks: {
+    messages: Message[]
+    setMessages: React.Dispatch<React.SetStateAction<Message[]>>
+  }
+}
+
+const ChatForm = ({hooks: {messages, setMessages}}: ChatFormProps) => {
   const [textValue, setTextValue] = useState("")
   const [areaHeight, setHeight] = useState(24)
+  const getPrompt = api.assistant.sendPrompt.useMutation()
+
+  const addMessage = async () => {
+    const response = await getPrompt.mutate(textValue) as unknown as string
+
+    setMessages([
+      ...messages,
+      {
+        role: "user",
+        content: textValue,
+      },
+      {
+        role: "assistant",
+        content: response
+      }
+    ])
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (textValue.replace(/[\s\n]/g, "") === "") return
+    addMessage()
     setTextValue("")
   }
 
