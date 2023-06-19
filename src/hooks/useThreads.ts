@@ -19,7 +19,7 @@ const useThreads = (userEmail: string) => {
     | [];
 
   // Get threads from the database
-  const [threads, setThreads] = useState<Thread[]>(
+  const [threads, setThreads] = useState(
     Array.isArray(fetchedThreads) && fetchedThreads.length === 0
       ? []
       : fetchedThreads
