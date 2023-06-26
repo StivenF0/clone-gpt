@@ -95,12 +95,6 @@ const SideOptions = ({ clearButton }: { clearButton: boolean }) => {
 
   const handleToggleDarkMode = () => {
     setDarkMode(!isDarkMode);
-    return;
-  };
-
-  const handleLogOut = () => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    // signOut();
   };
 
   return (
@@ -143,7 +137,7 @@ const SideOptions = ({ clearButton }: { clearButton: boolean }) => {
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
           <circle cx="12" cy="7" r="4"></circle>
         </svg>
-        Stiven
+        User
       </a>
       <a onClick={handleToggleDarkMode} className={buttonClassName}>
         {isDarkMode ? (
@@ -215,7 +209,7 @@ const SideOptions = ({ clearButton }: { clearButton: boolean }) => {
         </svg>
         Get help
       </a>
-      <a onClick={handleLogOut} className={buttonClassName}>
+      <a className={buttonClassName}>
         <svg
           stroke="currentColor"
           fill="none"

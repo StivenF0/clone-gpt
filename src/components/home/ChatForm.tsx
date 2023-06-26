@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { type Message } from "./MainSection";
-// import { api } from "@/utils/api";
 
 interface ChatFormProps {
   hooks: {
@@ -12,21 +11,14 @@ interface ChatFormProps {
 const ChatForm = ({ hooks: { messages, setMessages } }: ChatFormProps) => {
   const [textValue, setTextValue] = useState("");
   const [areaHeight, setHeight] = useState(24);
-  // const getPrompt = api.assistant.sendPrompt.useMutation();
 
   const addMessage = () => {
-    // const response = (await getPrompt.mutate(textValue)) as unknown as string;
-
     setMessages([
       ...messages,
       {
         role: "user",
         content: textValue,
       },
-      // {
-      //   role: "assistant",
-      //   content: response
-      // }
     ]);
   };
 
