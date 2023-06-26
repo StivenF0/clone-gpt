@@ -15,7 +15,7 @@ export default function SideBar() {
         <NewChatButton />
 
         {/* Threads container*/}
-        <div className="flex flex-1 flex-col gap-2 overflow-y-auto border-b border-white/20 text-sm text-gray-100">
+        <div className="pt-2 flex flex-1 flex-col gap-2 overflow-y-auto border-b border-white/20 text-sm text-gray-100">
           {/* Threads Links*/}
           <ActiveThreadLink title="Active Thread Example" />
           <ThreadLink title="Thread Example" />

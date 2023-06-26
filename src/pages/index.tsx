@@ -2,6 +2,11 @@ import MainSection from "@/components/home/MainSection";
 import SideBar from "@/components/home/Sidebar";
 import Head from "next/head";
 import { createContext, useEffect, useState } from "react";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+});
 
 export const MainCtx = createContext(
   {} as {
@@ -45,7 +50,9 @@ const Home = () => {
           setStarting,
         }}
       >
-        <main className="relative flex h-screen w-full overflow-hidden bg-white dark:bg-gray-800">
+        <main
+          className={`relative flex h-screen w-full overflow-hidden bg-white dark:bg-gray-800 ${inter.className}`}
+        >
           {/* Sidebar Layout */}
           <SideBar />
 
