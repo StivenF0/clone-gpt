@@ -90,7 +90,7 @@ const ChatForm = ({ hooks: { messages, setMessages } }: ChatFormProps) => {
       </form>
       <div className="px-3 pb-3 pt-2 text-center text-xs text-black/50 dark:text-white/50 md:px-4 md:pb-6 md:pt-3">
         <span>
-          Free Research Preview. CLoneGPT may produce inaccurate information
+          Free Research Preview. CloneGPT may produce inaccurate information
           about people, places, or facts.{" "}
           <span className="underline cursor-pointer">
             CloneGPT Jun 26 Version
